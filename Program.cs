@@ -9,49 +9,39 @@ namespace Исключения
 {
     internal class Program
     {
-        delegate void SumDelegate(int a, int b);
+        delegate void ShowMessageDelegate();
+        delegate int SumDelegate(int a, int b, int c);
+        delegate bool CheckLengthDelegate(string _row);
         static void Main(string[] args)
         {
+            Action showMessageDelegate = ShowMessage;
+            showMessageDelegate.Invoke();
 
-            SumDelegate sumDelegate = Sum1;
-            sumDelegate += Sum2;
-            sumDelegate -= Sum2;
-            sumDelegate.Invoke(10, 5);
-            Console.WriteLine(sumDelegate);
+            Func<int, int, int, int> sumDelegate = Sum;
+            int result = sumDelegate.Invoke(1, 30, 120);
+            Console.WriteLine(result);
+
+            Predicate<string> checkLengthDelegate = CheckLength;
+            bool status = checkLengthDelegate.Invoke("skill_factory");
+            Console.WriteLine(status);
             Console.ReadKey();
-
-
-
-
-
-
-
-
-
-            /*try 
-            {
-                
-                throw new RankException("Oshibka");
-            } 
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.GetType());
-                
-            }
-            finally { Console.Read(); }*/
-
-
         }
-        static void Sum1(int a, int b)
+        static void ShowMessage()
         {
-            int c = a - b;
-            Console.WriteLine(c);
+            Console.WriteLine("Hello World!");
         }
-        static void Sum2(int a, int b)
+
+        static int Sum(int a, int b, int c)
         {
-            int c = a + b;
-            Console.WriteLine(c);
+            return a + b + c;
         }
+
+        static bool CheckLength(string _row)
+        {
+            if (_row.Length > 3) return true;
+            return false;
+        }
+
     }
    
 }
